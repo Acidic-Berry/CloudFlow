@@ -13,9 +13,7 @@
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+
 
     <nav class="navbar">
 
@@ -56,13 +54,10 @@
     </nav>
 
 
-    <!-- =========================
-         MAIN
-    ========================== -->
+
 
     <main class="dashboard">
 
-        <!-- HEADER -->
 
         <section class="dashboard-header">
 
@@ -83,7 +78,7 @@
 
                 <p>
                     Upload, manage and access your files
-                    through your DevOps-powered workspace.
+                    through your DevOps powered workspace.
                 </p>
 
             </div>
@@ -99,10 +94,6 @@
 
         </section>
 
-
-        <!-- =========================
-             STATISTICS
-        ========================== -->
 
         <section class="stats-grid">
 
@@ -192,9 +183,6 @@
         </section>
 
 
-        <!-- =========================
-             UPLOAD AREA
-        ========================== -->
 
         <section class="upload-section">
 
@@ -256,7 +244,6 @@
             </div>
 
 
-            <!-- UPLOAD PROGRESS -->
 
             <div
                 class="upload-progress"
@@ -287,7 +274,6 @@
             </div>
 
 
-            <!-- MESSAGE -->
 
             <div
                 class="upload-message"
@@ -297,9 +283,6 @@
         </section>
 
 
-        <!-- =========================
-             FILE LIST
-        ========================== -->
 
         <section class="files-section">
 
@@ -364,16 +347,13 @@
     </main>
 
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
 
     <footer class="footer">
 
         <div>
 
             <strong>
-                Azure<span>DevOps</span>
+                Cloud<span>Flow</span>
             </strong>
 
             <small>
@@ -397,9 +377,6 @@
     </footer>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
 
     <script>
 
@@ -443,9 +420,6 @@
             document.getElementById("refreshButton");
 
 
-        /* =========================
-           FILE SIZE
-        ========================== */
 
         function formatSize(bytes) {
 
@@ -474,9 +448,6 @@
         }
 
 
-        /* =========================
-           LOAD FILES
-        ========================== */
 
         async function loadFiles() {
 
@@ -506,9 +477,6 @@
         }
 
 
-        /* =========================
-           RENDER FILES
-        ========================== */
 
         function renderFiles(files) {
 
@@ -610,9 +578,6 @@
         }
 
 
-        /* =========================
-           ESCAPE HTML
-        ========================== */
 
         function escapeHtml(text) {
 
@@ -626,9 +591,6 @@
         }
 
 
-        /* =========================
-           UPLOAD
-        ========================== */
 
         async function uploadFile(file) {
 
@@ -773,9 +735,6 @@
         }
 
 
-        /* =========================
-           DELETE
-        ========================== */
 
         async function deleteFile(filename) {
 
@@ -837,10 +796,6 @@
         }
 
 
-        /* =========================
-           MESSAGE
-        ========================== */
-
         function showMessage(
             message,
             type
@@ -863,9 +818,6 @@
         }
 
 
-        /* =========================
-           FILE INPUT
-        ========================== */
 
         browseButton.addEventListener(
             "click",
@@ -907,10 +859,6 @@
             }
         );
 
-
-        /* =========================
-           DRAG & DROP
-        ========================== */
 
         uploadZone.addEventListener(
             "dragover",
@@ -964,9 +912,6 @@
         );
 
 
-        /* =========================
-           REFRESH
-        ========================== */
 
         refreshButton.addEventListener(
             "click",
@@ -974,9 +919,6 @@
         );
 
 
-        /* =========================
-           INITIAL LOAD
-        ========================== */
 
         loadFiles();
 
