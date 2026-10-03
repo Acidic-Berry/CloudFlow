@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | CLOUDFLOW</title>
+
+    <link rel="stylesheet" href="/dashboard.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+
+            <div class="brand-symbol">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="brand-name">
+                CLOUD<span>FLOW</span>
+            </div>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/">Home</a>
+
+            <a href="/about">About</a>
+
+            <a href="/dashboard" class="active">
+                Dashboard
+            </a>
+
+        </div>
+
+        <div class="system-status">
+
+            <span class="status-light"></span>
+
+            SYSTEM ONLINE
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="dashboard">
+
+        <!-- HEADER -->
+
+        <section class="dashboard-header">
+
+            <div>
+
+                <div class="page-label">
+
+                    <span></span>
+
+                    FILE MANAGEMENT
+
+                </div>
+
+                <h1>
+                    Your cloud
+                    <span>workspace.</span>
+                </h1>
+
+                <p>
+                    Upload, manage and access your files
+                    through your DevOps-powered workspace.
+                </p>
+
+            </div>
+
+
+            <div class="connection-status">
+
+                <span class="pulse"></span>
+
+                BACKEND CONNECTED
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>TOTAL FILES</span>
+
+                    <b>01</b>
+
+                </div>
+
+                <strong id="totalFiles">
+                    0
+                </strong>
+
+                <small>
+                    Files in workspace
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>STORAGE USED</span>
+
+                    <b>02</b>
+
+                </div>
+
+                <strong id="storageUsed">
+                    0 KB
+                </strong>
+
+                <small>
+                    Local storage
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>MAX FILE SIZE</span>
+
+                    <b>03</b>
+
+                </div>
+
+                <strong>
+                    10 MB
+                </strong>
+
+                <small>
+                    Per upload
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>SYSTEM</span>
+
+                    <b>04</b>
+
+                </div>
+
+                <strong class="online">
+                    ONLINE
+                </strong>
+
+                <small>
+                    API operational
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             UPLOAD AREA
+        ========================== -->
+
+        <section class="upload-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <span>01 / UPLOAD</span>
+
+                    <h2>
+                        Add new files.
+                    </h2>
+
+                </div>
+
+                <small>
+                    MAXIMUM SIZE: 10 MB
+                </small>
+
+            </div>
+
+
+            <div
+                class="upload-zone"
+                id="uploadZone"
+            >
+
+                <div class="upload-glow"></div>
+
+                <div class="upload-icon">
+                    +
+                </div>
+
+                <h3>
+                    Drop your files here
+                </h3>
+
+                <p>
+                    or click to browse your computer
+                </p>
+
+                <span class="upload-info">
+                    Supports documents, images, archives and more
+                </span>
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    hidden
+                >
+
+                <button
+                    type="button"
+                    id="browseButton"
+                >
+                    SELECT FILE
+                </button>
+
+            </div>
+
+
+            <!-- UPLOAD PROGRESS -->
+
+            <div
+                class="upload-progress"
+                id="uploadProgress"
+            >
+
+                <div class="progress-info">
+
+                    <span id="uploadFileName">
+                        Uploading...
+                    </span>
+
+                    <span id="uploadPercent">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress-track">
+
+                    <div
+                        class="progress-bar"
+                        id="progressBar"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                class="upload-message"
+                id="uploadMessage"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             FILE LIST
+        ========================== -->
+
+        <section class="files-section">
+
+            <div class="files-header">
+
+                <div>
+
+                    <span>
+                        02 / STORAGE
+                    </span>
+
+                    <h2>
+                        Recent files.
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="refresh-button"
+                    id="refreshButton"
+                >
+                    ↻ &nbsp; REFRESH
+                </button>
+
+            </div>
+
+
+            <div class="file-container">
+
+                <div
+                    class="empty-state"
+                    id="emptyState"
+                >
+
+                    <div class="empty-icon">
+                        /
+                    </div>
+
+                    <h3>
+                        No files yet
+                    </h3>
+
+                    <p>
+                        Upload your first file to populate
+                        your workspace.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="file-list"
+                    id="fileList"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div>
+
+            <strong>
+                Azure<span>DevOps</span>
+            </strong>
+
+            <small>
+                Cloud file management system
+            </small>
+
+        </div>
+
+        <div class="footer-status">
+
+            <span></span>
+
+            API OPERATIONAL
+
+        </div>
+
+        <div class="footer-year">
+            © 2026
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        const uploadZone =
+            document.getElementById("uploadZone");
+
+        const fileInput =
+            document.getElementById("fileInput");
+
+        const browseButton =
+            document.getElementById("browseButton");
+
+        const uploadProgress =
+            document.getElementById("uploadProgress");
+
+        const progressBar =
+            document.getElementById("progressBar");
+
+        const uploadPercent =
+            document.getElementById("uploadPercent");
+
+        const uploadFileName =
+            document.getElementById("uploadFileName");
+
+        const uploadMessage =
+            document.getElementById("uploadMessage");
+
+        const fileList =
+            document.getElementById("fileList");
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+        const totalFiles =
+            document.getElementById("totalFiles");
+
+        const storageUsed =
+            document.getElementById("storageUsed");
+
+        const refreshButton =
+            document.getElementById("refreshButton");
+
+
+        /* =========================
+           FILE SIZE
+        ========================== */
+
+        function formatSize(bytes) {
+
+            if (bytes === 0) {
+                return "0 KB";
+            }
+
+            const units =
+                ["Bytes", "KB", "MB", "GB"];
+
+            const index =
+                Math.floor(
+                    Math.log(bytes) /
+                    Math.log(1024)
+                );
+
+            return (
+                parseFloat(
+                    (bytes /
+                    Math.pow(1024, index))
+                    .toFixed(2)
+                )
+                + " "
+                + units[index]
+            );
+        }
+
+
+        /* =========================
+           LOAD FILES
+        ========================== */
+
+        async function loadFiles() {
+
+            try {
+
+                const response =
+                    await fetch("/api/files");
+
+                const data =
+                    await response.json();
+
+                if (!data.success) {
+                    return;
+                }
+
+                renderFiles(data.files);
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to load files:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           RENDER FILES
+        ========================== */
+
+        function renderFiles(files) {
+
+            fileList.innerHTML = "";
+
+            totalFiles.textContent =
+                files.length;
+
+            const totalStorage =
+                files.reduce(
+                    (total, file) =>
+                        total + file.size,
+                    0
+                );
+
+            storageUsed.textContent =
+                formatSize(totalStorage);
+
+
+            if (files.length === 0) {
+
+                emptyState.style.display =
+                    "block";
+
+                return;
+
+            }
+
+            emptyState.style.display =
+                "none";
+
+
+            files.forEach(file => {
+
+                const row =
+                    document.createElement("div");
+
+                row.className =
+                    "file-row";
+
+
+                row.innerHTML = `
+
+                    <div class="file-info">
+
+                        <div class="file-icon">
+                            FILE
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                ${escapeHtml(file.fileName)}
+                            </strong>
+
+                            <small>
+                                ${formatSize(file.size)}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="file-date">
+
+                        ${new Date(
+                            file.uploadedAt
+                        ).toLocaleDateString()}
+
+                    </div>
+
+
+                    <div class="file-actions">
+
+                        <a
+                            href="${file.url}"
+                            target="_blank"
+                            class="download-button"
+                        >
+                            OPEN
+                        </a>
+
+                        <button
+                            class="delete-button"
+                            onclick="deleteFile('${encodeURIComponent(file.fileName)}')"
+                        >
+                            DELETE
+                        </button>
+
+                    </div>
+
+                `;
+
+                fileList.appendChild(row);
+
+            });
+
+        }
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================== */
+
+        function escapeHtml(text) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent = text;
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =========================
+           UPLOAD
+        ========================== */
+
+        async function uploadFile(file) {
+
+            if (!file) {
+                return;
+            }
+
+
+            if (file.size > 10 * 1024 * 1024) {
+
+                showMessage(
+                    "File is too large. Maximum size is 10MB.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "file",
+                file
+            );
+
+
+            uploadProgress.classList.add(
+                "visible"
+            );
+
+            uploadFileName.textContent =
+                file.name;
+
+            progressBar.style.width =
+                "0%";
+
+            uploadPercent.textContent =
+                "0%";
+
+
+            try {
+
+                const xhr =
+                    new XMLHttpRequest();
+
+                xhr.open(
+                    "POST",
+                    "/api/upload"
+                );
+
+
+                xhr.upload.onprogress =
+                    function (event) {
+
+                        if (event.lengthComputable) {
+
+                            const percent =
+                                Math.round(
+                                    (event.loaded /
+                                    event.total) *
+                                    100
+                                );
+
+                            progressBar.style.width =
+                                percent + "%";
+
+                            uploadPercent.textContent =
+                                percent + "%";
+
+                        }
+
+                    };
+
+
+                xhr.onload =
+                    function () {
+
+                        uploadProgress.classList.remove(
+                            "visible"
+                        );
+
+
+                        if (
+                            xhr.status >= 200 &&
+                            xhr.status < 300
+                        ) {
+
+                            showMessage(
+                                "File uploaded successfully.",
+                                "success"
+                            );
+
+                            loadFiles();
+
+                        } else {
+
+                            showMessage(
+                                "Upload failed.",
+                                "error"
+                            );
+
+                        }
+
+                    };
+
+
+                xhr.onerror =
+                    function () {
+
+                        uploadProgress.classList.remove(
+                            "visible"
+                        );
+
+                        showMessage(
+                            "Unable to connect to the server.",
+                            "error"
+                        );
+
+                    };
+
+
+                xhr.send(formData);
+
+            } catch (error) {
+
+                console.error(error);
+
+                uploadProgress.classList.remove(
+                    "visible"
+                );
+
+                showMessage(
+                    "Something went wrong.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           DELETE
+        ========================== */
+
+        async function deleteFile(filename) {
+
+            const decoded =
+                decodeURIComponent(filename);
+
+            const confirmed =
+                confirm(
+                    `Delete "${decoded}"?`
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/files/${filename}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+
+                if (data.success) {
+
+                    showMessage(
+                        "File deleted successfully.",
+                        "success"
+                    );
+
+                    loadFiles();
+
+                } else {
+
+                    showMessage(
+                        data.message ||
+                        "Unable to delete file.",
+                        "error"
+                    );
+
+                }
+
+            } catch (error) {
+
+                showMessage(
+                    "Unable to connect to the server.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================== */
+
+        function showMessage(
+            message,
+            type
+        ) {
+
+            uploadMessage.textContent =
+                message;
+
+            uploadMessage.className =
+                `upload-message ${type}`;
+
+
+            setTimeout(() => {
+
+                uploadMessage.className =
+                    "upload-message";
+
+            }, 4000);
+
+        }
+
+
+        /* =========================
+           FILE INPUT
+        ========================== */
+
+        browseButton.addEventListener(
+            "click",
+            () => fileInput.click()
+        );
+
+
+        uploadZone.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target !==
+                    browseButton
+                ) {
+
+                    fileInput.click();
+
+                }
+
+            }
+        );
+
+
+        fileInput.addEventListener(
+            "change",
+            () => {
+
+                if (fileInput.files.length) {
+
+                    uploadFile(
+                        fileInput.files[0]
+                    );
+
+                    fileInput.value = "";
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           DRAG & DROP
+        ========================== */
+
+        uploadZone.addEventListener(
+            "dragover",
+            event => {
+
+                event.preventDefault();
+
+                uploadZone.classList.add(
+                    "dragging"
+                );
+
+            }
+        );
+
+
+        uploadZone.addEventListener(
+            "dragleave",
+            () => {
+
+                uploadZone.classList.remove(
+                    "dragging"
+                );
+
+            }
+        );
+
+
+        uploadZone.addEventListener(
+            "drop",
+            event => {
+
+                event.preventDefault();
+
+                uploadZone.classList.remove(
+                    "dragging"
+                );
+
+
+                const files =
+                    event.dataTransfer.files;
+
+                if (files.length) {
+
+                    uploadFile(
+                        files[0]
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           REFRESH
+        ========================== */
+
+        refreshButton.addEventListener(
+            "click",
+            loadFiles
+        );
+
+
+        /* =========================
+           INITIAL LOAD
+        ========================== */
+
+        loadFiles();
+
+    </script>
+
+</body>
+
+</html>
