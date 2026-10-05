@@ -5,27 +5,38 @@ const cors = require("cors");
 const fs = require("fs");
 require("dotenv").config();
 
+const {
+    S3Client,
+    GetObjectCommand
+} = require("@aws-sdk/client-s3");
+
 const fileStorage = require("./services/storage");
 
 const app = express();
 
-// =====================================================
-// CONFIGURATION
-// =====================================================
+
 
 const PORT = process.env.PORT || 3000;
 
 const uploadDirectory = path.join(__dirname, "uploads");
 
-// Create uploads directory automatically
+const bucketName =
+    process.env.S3_BUCKET || "cloudflow-storage-2026";
+
+const awsRegion =
+    process.env.AWS_REGION || "us-east-1";
+
+const s3 = new S3Client({
+    region: awsRegion
+});
+
+
 if (!fs.existsSync(uploadDirectory)) {
     fs.mkdirSync(uploadDirectory, { recursive: true });
 }
 
 
-// =====================================================
-// MIDDLEWARE
-// =====================================================
+
 
 app.use(cors());
 
@@ -38,16 +49,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 
-// Serve uploaded files
-app.use(
-    "/uploads",
-    express.static(uploadDirectory)
-);
 
-
-// =====================================================
-// MULTER CONFIGURATION
-// =====================================================
 
 const multerStorage = multer.diskStorage({
 
@@ -79,9 +81,7 @@ const upload = multer({
 });
 
 
-// =====================================================
-// HOME PAGE
-// =====================================================
+
 
 app.get("/", (req, res) => {
 
@@ -92,9 +92,6 @@ app.get("/", (req, res) => {
 });
 
 
-// =====================================================
-// ABOUT PAGE
-// =====================================================
 
 app.get("/about", (req, res) => {
 
@@ -105,9 +102,7 @@ app.get("/about", (req, res) => {
 });
 
 
-// =====================================================
-// DASHBOARD PAGE
-// =====================================================
+
 
 app.get("/dashboard", (req, res) => {
 
@@ -118,9 +113,56 @@ app.get("/dashboard", (req, res) => {
 });
 
 
-// =====================================================
-// UPLOAD API
-// =====================================================
+
+
+app.get("/uploads/:filename", async (req, res) => {
+
+    try {
+
+        const filename =
+            path.basename(req.params.filename);
+
+        const response = await s3.send(
+            new GetObjectCommand({
+                Bucket: bucketName,
+                Key: filename
+            })
+        );
+
+        if (response.ContentType) {
+            res.setHeader(
+                "Content-Type",
+                response.ContentType
+            );
+        }
+
+        if (response.ContentLength) {
+            res.setHeader(
+                "Content-Length",
+                response.ContentLength
+            );
+        }
+
+        response.Body.pipe(res);
+
+    } catch (error) {
+
+        console.error(
+            "S3 file retrieval error:",
+            error
+        );
+
+        res.status(404).json({
+            success: false,
+            message: "File not found."
+        });
+
+    }
+
+});
+
+
+
 
 app.post(
     "/api/upload",
@@ -193,9 +235,6 @@ app.post(
 );
 
 
-// =====================================================
-// LIST FILES API
-// =====================================================
 
 app.get(
     "/api/files",
@@ -256,9 +295,6 @@ app.get(
 );
 
 
-// =====================================================
-// DELETE FILE API
-// =====================================================
 
 app.delete(
     "/api/files/:filename",
@@ -302,9 +338,6 @@ app.delete(
 );
 
 
-// =====================================================
-// ERROR HANDLER
-// =====================================================
 
 app.use(
     (error, req, res, next) => {
@@ -340,14 +373,11 @@ app.use(
 );
 
 
-// =====================================================
-// START SERVER
-// =====================================================
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
 
     console.log(
-        `Server running on port ${PORT}`
+        `CloudFlow server running on port ${PORT}`
     );
 
 });
